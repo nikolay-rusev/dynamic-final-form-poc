@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form } from 'react-final-form';
+import Styles from './Styles';
 import {
   TextField,
   Checkboxes,
@@ -12,7 +12,6 @@ import {
   Typography,
   Paper,
   Link,
-  Button,
   CssBaseline,
   MenuItem,
   Stack,
@@ -20,6 +19,7 @@ import {
 } from '@mui/material';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import Wizard from './Wizard';
 
 const onSubmit = async (values) => {
   const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
@@ -163,72 +163,93 @@ const formFields = [
 
 function App() {
   return (
-    <LocalizationProvider dateAdapter={AdapterDateFns}>
-      <div style={{ padding: 16, margin: 'auto', maxWidth: 600 }}>
-        <CssBaseline />
-        <Typography variant="h4" align="center" component="h1" gutterBottom>
-          <span role="img" aria-label="flag">
-            🏁
-          </span>
-          <h3>React Final Form</h3>
-        </Typography>
-        <Typography variant="h5" align="center" component="h2" gutterBottom>
-          Material-UI Example
-        </Typography>
-        <Typography>
-          <Link href="https://github.com/erikras/react-final-form#-react-final-form">
-            Read Docs
-          </Link>
-          . This example demonstrates using{' '}
-          <Link href="https://mui.com/material-ui/getting-started/overview/">
-            Material-UI
-          </Link>{' '}
-          form controls.
-        </Typography>
-        <Form
-          onSubmit={onSubmit}
-          initialValues={{ employed: true, stooge: 'larry' }}
-          validate={validate}
-          render={({ handleSubmit, form, submitting, pristine, values }) => (
-            <form onSubmit={handleSubmit} noValidate>
+    <Styles>
+      <LocalizationProvider dateAdapter={AdapterDateFns}>
+        <div style={{ padding: 16, margin: 'auto', maxWidth: 600 }}>
+          <CssBaseline />
+          <Typography variant="h4" align="center" component="h1" gutterBottom>
+            <span role="img" aria-label="flag">
+              🏁
+            </span>
+            <span>React Final Form</span>
+          </Typography>
+          <Typography variant="h5" align="center" component="h2" gutterBottom>
+            Material-UI Example
+          </Typography>
+          <Typography>
+            <Link href="https://github.com/erikras/react-final-form#-react-final-form">
+              Read Docs
+            </Link>
+            . This example demonstrates using
+            <Link href="https://mui.com/material-ui/getting-started/overview/">
+              Material-UI
+            </Link>
+            form controls.
+          </Typography>
+          <Wizard onSubmit={onSubmit} initialValues={{}} validate={validate}>
+            <Wizard.Step>
               <Paper style={{ padding: 16 }}>
                 <Stack spacing={2}>
-                  {formFields.map((item, idx) => (
-                    <Box
-                      key={`form-${idx}-${item.id}`}
-                      width={item.size === 6 ? '50%' : '100%'}
-                    >
-                      {item.field}
-                    </Box>
-                  ))}
-                  <Box mt={2}>
-                    <Button
-                      type="button"
-                      variant="contained"
-                      onClick={form.reset}
-                      disabled={submitting || pristine}
-                    >
-                      Reset
-                    </Button>
-                  </Box>
-                  <Box mt={2}>
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      type="submit"
-                      disabled={submitting}
-                    >
-                      Submit
-                    </Button>
-                  </Box>
+                  {formFields
+                    .filter((item) => {
+                      return [
+                        'firstName',
+                        'lastName',
+                        'email',
+                        'employed',
+                      ].includes(item.id);
+                    })
+                    .map((item, idx) => (
+                      <Box
+                        key={`form-${idx}-${item.id}`}
+                        width={item.size === 6 ? '50%' : '100%'}
+                      >
+                        {item.field}
+                      </Box>
+                    ))}
                 </Stack>
               </Paper>
-              <pre>{JSON.stringify(values, null, 2)}</pre>
-            </form>
-          )}
-        />
-      </div>
-    </LocalizationProvider>
+            </Wizard.Step>
+            <Wizard.Step>
+              <Paper style={{ padding: 16 }}>
+                <Stack spacing={2}>
+                  {formFields
+                    .filter((item) => {
+                      return ['stooge', 'sauces', 'notes'].includes(item.id);
+                    })
+                    .map((item, idx) => (
+                      <Box
+                        key={`form-${idx}-${item.id}`}
+                        width={item.size === 6 ? '50%' : '100%'}
+                      >
+                        {item.field}
+                      </Box>
+                    ))}
+                </Stack>
+              </Paper>
+            </Wizard.Step>
+            <Wizard.Step>
+              <Paper style={{ padding: 16 }}>
+                <Stack spacing={2}>
+                  {formFields
+                    .filter((item) => {
+                      return ['city', 'rendezvous', 'alarm'].includes(item.id);
+                    })
+                    .map((item, idx) => (
+                      <Box
+                        key={`form-${idx}-${item.id}`}
+                        width={item.size === 6 ? '50%' : '100%'}
+                      >
+                        {item.field}
+                      </Box>
+                    ))}
+                </Stack>
+              </Paper>
+            </Wizard.Step>
+          </Wizard>
+        </div>
+      </LocalizationProvider>
+    </Styles>
   );
 }
 
