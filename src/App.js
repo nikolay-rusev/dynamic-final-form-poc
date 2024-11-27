@@ -12,10 +12,11 @@ import {
   Typography,
   Paper,
   Link,
-  Grid,
   Button,
   CssBaseline,
   MenuItem,
+  Stack,
+  Box,
 } from '@mui/material';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -42,28 +43,21 @@ const validate = (values) => {
 
 const formFields = [
   {
+    id: 'firstName',
     size: 6,
     field: (
-      <TextField
-        label="First Name"
-        name="firstName"
-        margin="none"
-        required={true}
-      />
+      <TextField label="First Name" name="firstName" margin="none" required />
     ),
   },
   {
+    id: 'lastName',
     size: 6,
     field: (
-      <TextField
-        label="Last Name"
-        name="lastName"
-        margin="none"
-        required={true}
-      />
+      <TextField label="Last Name" name="lastName" margin="none" required />
     ),
   },
   {
+    id: 'email',
     size: 12,
     field: (
       <TextField
@@ -71,11 +65,12 @@ const formFields = [
         label="Email"
         name="email"
         margin="none"
-        required={true}
+        required
       />
     ),
   },
   {
+    id: 'employed',
     size: 12,
     field: (
       <Checkboxes
@@ -86,6 +81,7 @@ const formFields = [
     ),
   },
   {
+    id: 'stooge',
     size: 12,
     field: (
       <Radios
@@ -102,6 +98,7 @@ const formFields = [
     ),
   },
   {
+    id: 'sauces',
     size: 12,
     field: (
       <Checkboxes
@@ -119,10 +116,12 @@ const formFields = [
     ),
   },
   {
+    id: 'notes',
     size: 12,
     field: <TextField name="notes" multiline label="Notes" margin="none" />,
   },
   {
+    id: 'city',
     size: 12,
     field: (
       <Select
@@ -137,24 +136,26 @@ const formFields = [
     ),
   },
   {
+    id: 'rendezvous',
     size: 6,
     field: (
       <DatePicker
         name="rendez-vous"
         margin="normal"
         label="Rendez-vous"
-        dateAdapter={AdapterDateFns} // Use the correct date adapter
+        dateAdapter={AdapterDateFns}
       />
     ),
   },
   {
+    id: 'alarm',
     size: 6,
     field: (
       <TimePicker
         name="alarm"
         margin="normal"
         label="Alarm"
-        dateAdapter={AdapterDateFns} // Use the correct date adapter
+        dateAdapter={AdapterDateFns}
       />
     ),
   },
@@ -178,10 +179,10 @@ function App() {
           <Link href="https://github.com/erikras/react-final-form#-react-final-form">
             Read Docs
           </Link>
-          . This example demonstrates using
+          . This example demonstrates using{' '}
           <Link href="https://mui.com/material-ui/getting-started/overview/">
             Material-UI
-          </Link>
+          </Link>{' '}
           form controls.
         </Typography>
         <Form
@@ -191,13 +192,16 @@ function App() {
           render={({ handleSubmit, form, submitting, pristine, values }) => (
             <form onSubmit={handleSubmit} noValidate>
               <Paper style={{ padding: 16 }}>
-                <Grid container alignItems="flex-start" spacing={2}>
+                <Stack spacing={2}>
                   {formFields.map((item, idx) => (
-                    <Grid item xs={item.size} key={idx}>
+                    <Box
+                      key={`form-${idx}-${item.id}`}
+                      width={item.size === 6 ? '50%' : '100%'}
+                    >
                       {item.field}
-                    </Grid>
+                    </Box>
                   ))}
-                  <Grid item style={{ marginTop: 16 }}>
+                  <Box mt={2}>
                     <Button
                       type="button"
                       variant="contained"
@@ -206,8 +210,8 @@ function App() {
                     >
                       Reset
                     </Button>
-                  </Grid>
-                  <Grid item style={{ marginTop: 16 }}>
+                  </Box>
+                  <Box mt={2}>
                     <Button
                       variant="contained"
                       color="primary"
@@ -216,8 +220,8 @@ function App() {
                     >
                       Submit
                     </Button>
-                  </Grid>
-                </Grid>
+                  </Box>
+                </Stack>
               </Paper>
               <pre>{JSON.stringify(values, null, 2)}</pre>
             </form>
@@ -227,4 +231,5 @@ function App() {
     </LocalizationProvider>
   );
 }
+
 export default App;
