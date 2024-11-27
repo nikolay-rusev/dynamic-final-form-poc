@@ -20,6 +20,8 @@ import {
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import Wizard from './Wizard';
+import Condition from './Condition';
+import Error from './Error';
 
 const onSubmit = async (values) => {
   const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
@@ -113,6 +115,28 @@ const formFields = [
           { label: 'Guacamole 🥑', value: 'guacamole' },
         ]}
       />
+    ),
+  },
+  {
+    id: 'streetOrPickup',
+    size: 12,
+    field: (
+      <>
+        <Condition when="stooge" is={'larry'}>
+          <TextField label="Street" name="street" margin="none" />
+        </Condition>
+        <Condition when="stooge" is={'moe'}>
+          <Select
+            name="pickupTime"
+            label="Pickup Time"
+            formControlProps={{ margin: 'none' }}
+          >
+            <MenuItem value="12:00">12:00</MenuItem>
+            <MenuItem value="16:00">16:00</MenuItem>
+            <MenuItem value="19:00">19:00</MenuItem>
+          </Select>
+        </Condition>
+      </>
     ),
   },
   {
@@ -215,7 +239,12 @@ function App() {
                 <Stack spacing={2}>
                   {formFields
                     .filter((item) => {
-                      return ['stooge', 'sauces', 'notes'].includes(item.id);
+                      return [
+                        'stooge',
+                        'sauces',
+                        'streetOrPickup',
+                        'notes',
+                      ].includes(item.id);
                     })
                     .map((item, idx) => (
                       <Box
