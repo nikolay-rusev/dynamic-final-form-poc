@@ -1,5 +1,5 @@
 import React from 'react';
-import Styles from './Styles';
+import Styles from './components/Styles';
 import {
   TextField,
   Checkboxes,
@@ -19,10 +19,10 @@ import {
 } from '@mui/material';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import Wizard from './Wizard';
-import Condition from './Condition';
-import Error from './Error';
-import MultiCondition from './MultiCondition';
+import Wizard from './components/Wizard';
+import Condition from './components/Condition';
+import Error from './components/Error';
+import MultiCondition from './components/MultiCondition';
 
 const onSubmit = async (values) => {
   const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
