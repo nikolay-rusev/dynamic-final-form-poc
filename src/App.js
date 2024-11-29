@@ -45,6 +45,7 @@ const validate = (values) => {
   return errors;
 };
 
+// source: https://www.30secondsofcode.org/js/s/array-includes-any-or-all-values/
 // Check if an array includes all values
 const includesAll = (arr, values) => values.every((v) => arr.includes(v));
 
