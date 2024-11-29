@@ -30,6 +30,7 @@ const onSubmit = async (values) => {
   window.alert(JSON.stringify(values, null, 2));
 };
 
+// simplified validator
 const validate = (values) => {
   const errors = {};
   if (!values.firstName) {
@@ -44,6 +45,13 @@ const validate = (values) => {
   return errors;
 };
 
+// handler for pickupTime visibility: used in conjunction with MultiCondition
+function handlePickupTimeVisibility(values) {
+  console.log(values);
+  return true;
+}
+
+// declarative form group (will be split to pages, using filter by id)
 const formFields = [
   {
     id: 'firstName',
@@ -126,7 +134,7 @@ const formFields = [
         <Condition when="stooge" is={'larry'}>
           <TextField label="Street" name="street" margin="none" />
         </Condition>
-        <Condition when="stooge" is={'moe'}>
+        <MultiCondition condition={handlePickupTimeVisibility}>
           <Select
             name="pickupTime"
             label="Pickup Time"
@@ -136,8 +144,10 @@ const formFields = [
             <MenuItem value="16:00">16:00</MenuItem>
             <MenuItem value="19:00">19:00</MenuItem>
           </Select>
-        </Condition>
-        <MultiCondition condition={({ gift, firstName }) => gift && firstName === "Joe"}>
+        </MultiCondition>
+        <MultiCondition
+          condition={({ gift, firstName }) => gift && firstName === 'Joe'}
+        >
           <span>gets rendered when condition is satisfied</span>
         </MultiCondition>
       </>
@@ -189,6 +199,7 @@ const formFields = [
   },
 ];
 
+// App is using Wizard and Wizard.Step to show form in different steps, while holding the state in one place
 function App() {
   return (
     <Styles>
