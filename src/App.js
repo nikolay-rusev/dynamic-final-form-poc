@@ -45,10 +45,15 @@ const validate = (values) => {
   return errors;
 };
 
+// Check if an array includes all values
+const includesAll = (arr, values) => values.every((v) => arr.includes(v));
+
 // handler for pickupTime visibility: used in conjunction with MultiCondition
 function handlePickupTimeVisibility(values) {
   console.log(values);
-  return true;
+  const { employed, sauces = [], stooge } = values;
+  const saucesMatch = includesAll(sauces, ['ketchup', 'mustard']);
+  return employed && stooge === 'curly' && saucesMatch;
 }
 
 // declarative form group (will be split to pages, using filter by id)
