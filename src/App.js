@@ -22,6 +22,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import Wizard from './Wizard';
 import Condition from './Condition';
 import Error from './Error';
+import MultiCondition from './MultiCondition';
 
 const onSubmit = async (values) => {
   const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
@@ -136,6 +137,9 @@ const formFields = [
             <MenuItem value="19:00">19:00</MenuItem>
           </Select>
         </Condition>
+        <MultiCondition condition={({ gift, firstName }) => gift && firstName === "Joe"}>
+          <span>gets rendered when condition is satisfied</span>
+        </MultiCondition>
       </>
     ),
   },
